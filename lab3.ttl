@@ -1,0 +1,159 @@
+@prefix : <http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/> .
+
+<http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/имеетСтатью
+:имеетСтатью rdf:type owl:ObjectProperty ;
+             rdfs:domain :Законы ;
+             rdfs:range :Статья .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/касаетсяГражданина
+:касаетсяГражданина rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Законы ;
+                    rdfs:range :Гражданин ;
+                    owl:propertyChainAxiom ( :имеетСтатью
+                                             :регулируетПраваГражданина
+                                           ) .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/регулируетПраваГражданина
+:регулируетПраваГражданина rdf:type owl:ObjectProperty ;
+                           rdfs:domain :Статья ;
+                           rdfs:range :Гражданин .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/ДатаПринятия
+:ДатаПринятия rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Законы ;
+              rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/ИНН
+:ИНН rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Гражданин ;
+     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/НомерСтатьи
+:НомерСтатьи rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Статья ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/ФИО
+:ФИО rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Гражданин ;
+     rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Гражданин
+:Гражданин rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Законы
+:Законы rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Статья
+:Статья rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/налогоплательщикМосквы
+:налогоплательщикМосквы rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( :Гражданин
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty :ИНН ;
+                                                                     owl:someValuesFrom xsd:string
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf :Гражданин .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Гражданин_Иванов
+:Гражданин_Иванов rdf:type owl:NamedIndividual ,
+                           :Гражданин ;
+                  :ИНН "770123456789" ;
+                  :ФИО "Иванов Иван Иванович" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Гражданин_Петров
+:Гражданин_Петров rdf:type owl:NamedIndividual ,
+                           :Гражданин ;
+                  :ИНН "780987654321" ;
+                  :ФИО "Петров Петр Петрович" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_123_1
+:Ст_123_1 rdf:type owl:NamedIndividual ,
+                   :Статья ;
+          owl:sameAs :Ст_123_2 ;
+          :регулируетПраваГражданина :Гражданин_Иванов ;
+          :НомерСтатьи "Статья 1" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_123_2
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_123_2
+:Ст_123_2 rdf:type owl:NamedIndividual ,
+                   :Статья ;
+          :НомерСтатьи "Статья 1.2" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_321_1
+:Ст_321_1 rdf:type owl:NamedIndividual ,
+                   :Статья ;
+          owl:sameAs :Ст_321_2 ;
+          :регулируетПраваГражданина :Гражданин_Петров ;
+          :НомерСтатьи "Статья 2" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_321_2
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/Ст_321_2
+:Ст_321_2 rdf:type owl:NamedIndividual ,
+                   :Статья ;
+          :НомерСтатьи "Статья 2.1" .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/ФЗ-138_О_гражданстве
+:ФЗ-138_О_гражданстве rdf:type owl:NamedIndividual ,
+                               :Законы ;
+                      :имеетСтатью :Ст_123_1 ,
+                                   :Ст_123_2 ;
+                      :ДатаПринятия "2002-05-31T12:00:00"^^xsd:dateTime .
+
+
+###  http://www.semanticweb.org/aid/ontologies/2025/11/untitled-ontology-9/ФЗ-196_О_налогах
+:ФЗ-196_О_налогах rdf:type owl:NamedIndividual ,
+                           :Законы ;
+                  :имеетСтатью :Ст_321_1 ,
+                               :Ст_321_2 ;
+                  :ДатаПринятия "2005-05-25T09:00:00"^^xsd:dateTime .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
